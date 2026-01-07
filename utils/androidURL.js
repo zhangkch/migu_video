@@ -11,7 +11,7 @@ import { fetchUrl } from "./net.js";
 
 /**
  * @param {string} md5 - md5字符串
- * @returns {SaltSign} - 
+ * @returns {SaltSign} -
  */
 function getSaltAndSign(md5) {
 
@@ -29,7 +29,7 @@ function getSaltAndSign(md5) {
  * @param {string} token - 用户token
  * @param {string} pid - 节目ID
  * @param {number} rateType - 清晰度
- * @returns {object} - 
+ * @returns {object} -
  */
 async function getAndroidURL(userId, token, pid, rateType) {
 
@@ -66,17 +66,18 @@ async function getAndroidURL(userId, token, pid, rateType) {
   const baseURL = "https://play.miguvideo.com/playurl/v1/play/playurl"
   let params = "?sign=" + result.sign + "&rateType=" + rateType
     + "&contId=" + pid + "&timestamp=" + timestramp + "&salt=" + result.salt
-    + "&flvEnable=true&super4k=true&h265N=true&4kvivid=true&2Kvivid=true&vivid=2"
+    + "&flvEnable=true&super4k=true&h265N=true"
   let respData = await fetchUrl(baseURL + params, {
     headers: headers
   })
+  printYellow(baseURL + params)
 
   if (respData.rid == 'TIPS_NEED_MEMBER') {
     printYellow("该账号没有会员 正在降低画质")
 
     params = "?sign=" + result.sign + "&rateType=3"
       + "&contId=" + pid + "&timestamp=" + timestramp + "&salt=" + result.salt
-      + "&flvEnable=true&super4k=true&h265N=true&4kvivid=true&2Kvivid=true&vivid=2"
+      + "&flvEnable=true&super4k=true&h265N=true"
     respData = await fetchUrl(baseURL + params, {
       headers: headers
     })
@@ -113,7 +114,7 @@ async function getAndroidURL(userId, token, pid, rateType) {
 /**
  * 旧版高清画质
  * @param {string} pid - 节目ID
- * @returns {object} - 
+ * @returns {object} -
  */
 async function getAndroidURL720p(pid) {
   // 获取url
@@ -142,7 +143,7 @@ async function getAndroidURL720p(pid) {
   const baseURL = "https://play.miguvideo.com/playurl/v1/play/playurl"
   const params = "?sign=" + sign + "&rateType=" + rateType
     + "&contId=" + pid + "&timestamp=" + timestramp + "&salt=" + salt + "&flvEnable=true"
-    + "&flvEnable=true&super4k=true&h265N=true&4kvivid=true&2Kvivid=true&vivid=2"
+    + "&super4k=true&h265N=true"
   const respData = await fetchUrl(baseURL + params, {
     headers: headers
   })
